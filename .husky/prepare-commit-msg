@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+commit_msg_file="$1"
+commit_msg="$(head -n 1 "$commit_msg_file")"
+
+# Example pattern: type(scope?): space: space message
+regex='^(feat|fix|chore|docs|refactor|test|style|perf)(\([a-zA-Z0-9_-]+\))?: .+'
+
+if ! [[ "$commit_msg" =~ $regex ]]; then
+  echo "✖ Commit message does not follow convention."
+  echo "  Expected: <type>(<scope>): <message>"
+  echo "  Example:  feat(auth): add login endpoint"
+  exit 1
+fi
