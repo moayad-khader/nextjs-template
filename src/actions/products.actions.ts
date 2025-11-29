@@ -1,13 +1,15 @@
 "use server";
 
+import type { Product } from "@/types/product";
+
 const baseUrl = "https://fakestoreapi.com";
 
-export async function getProducts() {
+export async function getProducts(): Promise<Product[]> {
 	const res = await fetch(`${baseUrl}/products`);
 	return res.json();
 }
 
-export async function getProductById(id: number) {
+export async function getProductById(id: number): Promise<Product> {
 	const res = await fetch(`${baseUrl}/products/${id}`);
 	return res.json();
 }
