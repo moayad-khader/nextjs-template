@@ -1,6 +1,6 @@
 import { HydrationBoundary } from "@tanstack/react-query";
-import { prefetch, type QueryDefinition } from "@/lib/query";
 import type { ReactNode } from "react";
+import { prefetch, type QueryDefinition } from "@/lib/query";
 
 type HydratedProps = {
 	queries: QueryDefinition[];
