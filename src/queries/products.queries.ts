@@ -1,7 +1,4 @@
-import {
-	getProductById,
-	getProducts,
-} from "@/actions/products.actions";
+import { getProductById, getProducts } from "@/actions/products.actions";
 
 export const productsQuery = {
 	queryKey: ["products"],
@@ -12,4 +9,3 @@ export const productByIdQuery = (id: number) => ({
 	queryKey: ["products", id],
 	queryFn: () => getProductById(id),
 });
-

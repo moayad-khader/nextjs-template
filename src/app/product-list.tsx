@@ -12,4 +12,3 @@ export function ProductList() {
 
 	return <pre>{JSON.stringify(products, null, 2)}</pre>;
 }
-

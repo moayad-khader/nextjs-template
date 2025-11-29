@@ -8,10 +8,7 @@ type QueryDefinition<T> = {
 export async function prefetch<T>(...queries: QueryDefinition<T>[]) {
 	const queryClient = new QueryClient();
 
-	await Promise.all(
-		queries.map((query) => queryClient.prefetchQuery(query))
-	);
+	await Promise.all(queries.map((query) => queryClient.prefetchQuery(query)));
 
 	return dehydrate(queryClient);
 }
-
