@@ -1,6 +1,6 @@
-import { getProductById, getProducts } from "@/actions/products.actions";
 import type { QueryDefinition } from "@/lib/query";
-import type { Product } from "@/types/product";
+import type { Product } from "@/features/products/types";
+import { getProductById, getProducts } from "./actions";
 
 // Query key factory
 export const productKeys = {
