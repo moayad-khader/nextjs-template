@@ -1,8 +1,8 @@
 "use server";
 
+import type { Product } from "@/features/products/types";
 import { api } from "@/lib/api";
 import endpoints from "@/lib/api/endpoints";
-import type { Product } from "@/features/products/types";
 
 export async function getProducts(): Promise<Product[]> {
 	const { data } = await api.get<Product[]>(endpoints.product.all);
