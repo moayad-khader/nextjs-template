@@ -7,7 +7,6 @@ export const productKeys = {
 	detail: (id: number) => [...productKeys.all, id] as const,
 };
 
-
 export const productsQuery: QueryDefinition<Product[]> = {
 	queryKey: productKeys.all,
 	queryFn: getProducts,
