@@ -11,7 +11,7 @@ const clientSchema = z.object({
 	NEXT_PUBLIC_APP_URL: z.url().optional(),
 });
 
-const envSchema = serverSchema.merge(clientSchema);
+const envSchema = serverSchema.extend(clientSchema.shape);
 
 type Env = z.infer<typeof envSchema>;
 
@@ -23,10 +23,6 @@ function validateEnv(): Env {
 	});
 
 	if (!parsed.success) {
-		console.error(
-			"Invalid environment variables:",
-			parsed.error.flatten().fieldErrors,
-		);
 		throw new Error("Invalid environment variables");
 	}
 
