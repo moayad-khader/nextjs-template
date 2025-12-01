@@ -9,8 +9,8 @@ const getItem = <T = unknown>(key: string): T | null => {
 const setItem = (key: string, value: unknown) => {
 	setCookie(key, value);
 };
-const delteItem = (key: string) => {
+const deleteItem = (key: string) => {
 	deleteCookie(key);
 };
 
-export { getItem, setItem, delteItem };
+export { getItem, setItem, deleteItem };

@@ -3,6 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import {
+	Field,
+	FieldError,
+	FieldGroup,
+	FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { createProduct } from "@/features/products/actions";
 import { productKeys } from "@/features/products/queries";
 import {
@@ -40,99 +49,79 @@ export function CreateProductForm() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-			<div>
-				<label htmlFor="title" className="block text-sm font-medium">
-					Title
-				</label>
-				<input
-					id="title"
-					{...register("title")}
-					className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-				/>
-				{errors.title && (
-					<p className="mt-1 text-sm text-red-500">{errors.title.message}</p>
-				)}
-			</div>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<FieldGroup>
+				<Field data-invalid={!!errors.title}>
+					<FieldLabel htmlFor="title">Title</FieldLabel>
+					<Input
+						id="title"
+						{...register("title")}
+						aria-invalid={!!errors.title}
+					/>
+					<FieldError>{errors.title?.message}</FieldError>
+				</Field>
 
-			<div>
-				<label htmlFor="price" className="block text-sm font-medium">
-					Price
-				</label>
-				<input
-					id="price"
-					type="number"
-					step="0.01"
-					{...register("price")}
-					className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-				/>
-				{errors.price && (
-					<p className="mt-1 text-sm text-red-500">{errors.price.message}</p>
-				)}
-			</div>
+				<Field data-invalid={!!errors.price}>
+					<FieldLabel htmlFor="price">Price</FieldLabel>
+					<Input
+						id="price"
+						type="number"
+						step="0.01"
+						{...register("price")}
+						aria-invalid={!!errors.price}
+					/>
+					<FieldError>{errors.price?.message}</FieldError>
+				</Field>
 
-			<div>
-				<label htmlFor="description" className="block text-sm font-medium">
-					Description
-				</label>
-				<textarea
-					id="description"
-					{...register("description")}
-					rows={3}
-					className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-				/>
-				{errors.description && (
-					<p className="mt-1 text-sm text-red-500">
-						{errors.description.message}
+				<Field data-invalid={!!errors.description}>
+					<FieldLabel htmlFor="description">Description</FieldLabel>
+					<Textarea
+						id="description"
+						{...register("description")}
+						rows={3}
+						aria-invalid={!!errors.description}
+					/>
+					<FieldError>{errors.description?.message}</FieldError>
+				</Field>
+
+				<Field data-invalid={!!errors.category}>
+					<FieldLabel htmlFor="category">Category</FieldLabel>
+					<Input
+						id="category"
+						{...register("category")}
+						aria-invalid={!!errors.category}
+					/>
+					<FieldError>{errors.category?.message}</FieldError>
+				</Field>
+
+				<Field data-invalid={!!errors.image}>
+					<FieldLabel htmlFor="image">Image URL</FieldLabel>
+					<Input
+						id="image"
+						{...register("image")}
+						aria-invalid={!!errors.image}
+					/>
+					<FieldError>{errors.image?.message}</FieldError>
+				</Field>
+
+				{createMutation.isError && (
+					<FieldError>Error: {createMutation.error.message}</FieldError>
+				)}
+
+				{createMutation.isSuccess && (
+					<p className="text-sm text-green-600 dark:text-green-400">
+						Product created successfully!
 					</p>
 				)}
-			</div>
 
-			<div>
-				<label htmlFor="category" className="block text-sm font-medium">
-					Category
-				</label>
-				<input
-					id="category"
-					{...register("category")}
-					className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-				/>
-				{errors.category && (
-					<p className="mt-1 text-sm text-red-500">{errors.category.message}</p>
-				)}
-			</div>
-
-			<div>
-				<label htmlFor="image" className="block text-sm font-medium">
-					Image URL
-				</label>
-				<input
-					id="image"
-					{...register("image")}
-					className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
-				/>
-				{errors.image && (
-					<p className="mt-1 text-sm text-red-500">{errors.image.message}</p>
-				)}
-			</div>
-
-			{createMutation.isError && (
-				<p className="text-sm text-red-500">
-					Error: {createMutation.error.message}
-				</p>
-			)}
-
-			{createMutation.isSuccess && (
-				<p className="text-sm text-green-500">Product created successfully!</p>
-			)}
-
-			<button
-				type="submit"
-				disabled={createMutation.isPending}
-				className="w-full rounded bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-			>
-				{createMutation.isPending ? "Creating..." : "Create Product"}
-			</button>
+				<Button
+					type="submit"
+					disabled={createMutation.isPending}
+					className="w-full"
+				>
+					{createMutation.isPending ? "Creating..." : "Create Product"}
+				</Button>
+			</FieldGroup>
 		</form>
 	);
 }
