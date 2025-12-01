@@ -1,14 +1,28 @@
 import { z } from "zod";
 
+// Helper to validate URL strings (process.env values are always strings)
+const urlString = (message?: string) =>
+	z.string().refine(
+		(val) => {
+			try {
+				new URL(val);
+				return true;
+			} catch {
+				return false;
+			}
+		},
+		{ message: message ?? "Invalid URL" },
+	);
+
 const serverSchema = z.object({
 	NODE_ENV: z
 		.enum(["development", "production", "test"])
 		.default("development"),
-	API_BASE_URL: z.url("API_BASE_URL must be a valid URL"),
+	API_BASE_URL: urlString("API_BASE_URL must be a valid URL"),
 });
 
 const clientSchema = z.object({
-	NEXT_PUBLIC_APP_URL: z.url().optional(),
+	NEXT_PUBLIC_APP_URL: urlString().optional(),
 });
 
 const envSchema = serverSchema.extend(clientSchema.shape);
