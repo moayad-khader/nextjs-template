@@ -73,6 +73,8 @@ jobs:
 
   e2e-test:
     runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: https://fakestoreapi.com
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,13 +93,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Build application
+        run: pnpm build
+
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run E2E tests
         run: pnpm test:e2e --project=chromium
-        env:
-          API_BASE_URL: https://fakestoreapi.com
 
   docker:
     runs-on: ubuntu-latest
