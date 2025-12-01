@@ -37,6 +37,7 @@ function validateEnv(): Env {
 	});
 
 	if (!parsed.success) {
+		console.error("Env validation failed:", parsed.error.flatten().fieldErrors);
 		throw new Error("Invalid environment variables");
 	}
 
