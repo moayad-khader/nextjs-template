@@ -90,10 +90,10 @@ ${colorConfig
 		const color =
 			itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
 			itemConfig.color;
-    if(color){
-      return `  --color-${key}: ${color};`;
-    }
-    return null;
+		if (color) {
+			return `  --color-${key}: ${color};`;
+		}
+		return null;
 	})
 	.join("\n")}
 }
@@ -139,10 +139,10 @@ function ChartTooltipContent({
 		const [item] = payload;
 		const key = `${labelKey || item?.dataKey || item?.name || "value"}`;
 		const itemConfig = getPayloadConfigFromPayload(config, item, key);
-    let value = itemConfig?.label;
-    if(!labelKey && typeof label === "string"){
-      value = config[label as keyof typeof config]?.label || label;
-    }
+		let value = itemConfig?.label;
+		if (!labelKey && typeof label === "string") {
+			value = config[label as keyof typeof config]?.label || label;
+		}
 		if (labelFormatter) {
 			return (
 				<div className={cn("font-medium", labelClassName)}>
